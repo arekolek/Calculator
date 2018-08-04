@@ -9,8 +9,12 @@ class Evaluator(
 ) {
 
     fun evaluate(expression: String): BigDecimal {
-        val tokens = tokenizer.tokenize(expression)
-        return postfixEvaluator.evaluate(converter.toPostfix(tokens))
+        try {
+            val tokens = tokenizer.tokenize(expression)
+            return postfixEvaluator.evaluate(converter.toPostfix(tokens))
+        } catch (e: Exception) {
+            throw ExpressionEvaluationException("Could not evaluate: $expression", e)
+        }
     }
 
 }

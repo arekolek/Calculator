@@ -6,24 +6,26 @@ class Tokenizer {
         val tokens = mutableListOf<String>()
         var number = ""
 
-        for (token in expression) {
-            when (token) {
-                in '0'..'9' -> number += token
+        for (character in expression) {
+            when (character) {
+                in ".0123456789" -> number += character
                 in "+-*/()" -> {
                     if (number.isNotEmpty()) {
-                        tokens += number
+                        tokens += number.validate()
                         number = ""
                     }
-                    tokens += token.toString()
+                    tokens += character.toString()
                 }
             }
         }
 
         if (number.isNotEmpty()) {
-            tokens += number
+            tokens += number.validate()
         }
 
         return tokens
     }
+
+    private fun String.validate() = apply { checkNotNull(toBigDecimalOrNull()) }
 
 }

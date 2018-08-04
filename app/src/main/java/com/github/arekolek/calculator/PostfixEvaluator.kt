@@ -1,7 +1,7 @@
 package com.github.arekolek.calculator
 
 import java.math.BigDecimal
-import java.math.MathContext
+import java.math.RoundingMode
 import java.util.*
 
 private const val ADD = "+"
@@ -19,7 +19,13 @@ class PostfixEvaluator {
                 ADD -> stack.reduceWith(BigDecimal::plus)
                 SUB -> stack.reduceWith(BigDecimal::minus)
                 MUL -> stack.reduceWith(BigDecimal::multiply)
-                DIV -> stack.reduceWith { a, b -> a.divide(b, MathContext.DECIMAL128) }
+                DIV -> stack.reduceWith { a, b ->
+                    try {
+                        a.divide(b)
+                    } catch (e: ArithmeticException) {
+                        a.divide(b, 100, RoundingMode.HALF_EVEN)
+                    }
+                }
                 else -> stack.push(token.toBigDecimal())
             }
         }
