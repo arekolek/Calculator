@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.arekolek.calculator.math.Evaluator
 import com.github.arekolek.calculator.math.ExpressionEvaluationException
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.min
 
 class MainViewModel(private val evaluator: Evaluator) : ViewModel() {
 
@@ -32,10 +35,21 @@ class MainViewModel(private val evaluator: Evaluator) : ViewModel() {
 
     private fun evaluate(expression: String): String {
         return try {
-            evaluator.evaluate(expression.normalize()).toPlainString()
+            if (expression.isEmpty()) {
+                ""
+            } else {
+                evaluator.evaluate(expression.normalize()).format()
+            }
         } catch (e: ExpressionEvaluationException) {
             _state.value?.result.orEmpty()
         }
+    }
+
+    private fun BigDecimal.format(length: Int = 15): String {
+        val wholeDigits = precision() - scale()
+        val maxScale = if (wholeDigits == 0) length - 2 else length - wholeDigits - 1
+        val scale = min(scale(), maxScale)
+        return setScale(scale, RoundingMode.DOWN).toPlainString()
     }
 
     private fun String.normalize(): String {
