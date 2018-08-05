@@ -11,6 +11,7 @@
     <style name="AppThemeOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="Widget.Button" parent="android:Widget.Material.Button.Borderless">
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
         <item name="android:textSize">28sp</item>
         <item name="android:theme">@style/AppThemeOverlay</item>
