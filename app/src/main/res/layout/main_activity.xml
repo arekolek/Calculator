@@ -16,7 +16,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:textAlignment="viewEnd"
+        android:gravity="end|center_vertical"
+        android:textAppearance="?android:textAppearanceLarge"
         app:autoSizeMaxTextSize="48sp"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeTextType="uniform"
@@ -35,7 +36,11 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:textAlignment="viewEnd"
+        android:gravity="end|center_vertical"
+        android:textAppearance="?android:textAppearanceMedium"
+        app:autoSizeMaxTextSize="36sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/numbers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +147,7 @@
             android:layout_height="0dp"
             android:onClick="onButtonClick"
             android:text="1"
-            app:layout_constraintBottom_toTopOf="@+id/zero"
+            app:layout_constraintBottom_toTopOf="@+id/dot"
             app:layout_constraintEnd_toStartOf="@+id/two"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/four"
@@ -175,29 +180,40 @@
             />
 
         <Button
-            android:id="@+id/zero"
-            style="@style/Widget.Button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:onClick="onButtonClick"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/dot"
-            app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/one"
-            />
-
-        <Button
             android:id="@+id/dot"
             style="@style/Widget.Button"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:onClick="onButtonClick"
             android:text="."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/zero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/one"
+            />
+
+        <Button
+            android:id="@+id/zero"
+            style="@style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="onButtonClick"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="@id/dot"
+            app:layout_constraintEnd_toStartOf="@+id/backspace"
+            app:layout_constraintStart_toEndOf="@id/dot"
+            app:layout_constraintTop_toTopOf="@id/dot"
+            />
+
+        <Button
+            android:id="@+id/backspace"
+            style="@style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="onButtonClick"
+            android:text="⌫"
             app:layout_constraintBottom_toBottomOf="@+id/zero"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/zero"
             app:layout_constraintTop_toTopOf="@+id/zero"
             />

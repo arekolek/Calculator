@@ -11,13 +11,16 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
 
     private val model by lazy {
-        ViewModelProviders.of(this).get<MainViewModel>()
+        ViewModelProviders.of(this, ViewModelFactory()).get<MainViewModel>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        model.expression.observe(this) { expression.text = it }
+        model.state.observe(this) {
+            expression.text = it.expression
+            result.text = it.result
+        }
     }
 
     fun onButtonClick(view: View) {
