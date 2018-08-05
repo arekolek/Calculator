@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.github.arekolek.calculator.math.Evaluator
 import com.github.arekolek.calculator.math.ExpressionEvaluationException
 import com.nhaarman.mockitokotlin2.*
+import io.reactivex.schedulers.TestScheduler
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +21,9 @@ class MainViewModelTest {
         on { evaluate("2") } doReturn 2.toBigDecimal()
     }
 
-    private val model = MainViewModel(evaluator)
+    private val scheduler = TestScheduler()
+
+    private val model = MainViewModel(evaluator, scheduler)
 
     private val observer: Observer<UiState> = mock()
 
@@ -32,9 +35,11 @@ class MainViewModelTest {
         }
 
         model.state.observeForever(observer)
-        model.onButtonClick("2")
-        model.onButtonClick("+")
-        model.onButtonClick("2")
+        model.onButtonClick('2')
+        model.onButtonClick('+')
+        model.onButtonClick('2')
+
+        scheduler.triggerActions()
 
         inOrder(observer) {
             verify(observer).onChanged(UiState("2", "2"))
@@ -45,9 +50,15 @@ class MainViewModelTest {
 
     @Test
     fun `result should clear after expression is cleared`() {
+        stubbing(evaluator) {
+            on { evaluate("") } doThrow ExpressionEvaluationException()
+        }
+
         model.state.observeForever(observer)
-        model.onButtonClick("2")
-        model.onButtonClick("⌫")
+        model.onButtonClick('2')
+        model.onButtonClick('⌫')
+
+        scheduler.triggerActions()
 
         inOrder(observer) {
             verify(observer).onChanged(UiState("2", "2"))
@@ -61,7 +72,9 @@ class MainViewModelTest {
             .willReturn(0.592452830188679245283018867924528301886792452830188679245.toBigDecimal())
 
         model.state.observeForever(observer)
-        model.onButtonClick("1")
+        model.onButtonClick('1')
+
+        scheduler.triggerActions()
 
         verify(observer).onChanged(UiState("1", "0.5924528301886"))
     }
@@ -72,7 +85,9 @@ class MainViewModelTest {
             .willReturn(666666.6666666666666666666666666666666666666666666666666666.toBigDecimal())
 
         model.state.observeForever(observer)
-        model.onButtonClick("1")
+        model.onButtonClick('1')
+
+        scheduler.triggerActions()
 
         verify(observer).onChanged(UiState("1", "666666.66666666"))
     }
@@ -83,7 +98,9 @@ class MainViewModelTest {
             .willReturn("100000000000000000000000".toBigDecimal())
 
         model.state.observeForever(observer)
-        model.onButtonClick("1")
+        model.onButtonClick('1')
+
+        scheduler.triggerActions()
 
         verify(observer).onChanged(UiState("1", "100000000000000000000000"))
     }

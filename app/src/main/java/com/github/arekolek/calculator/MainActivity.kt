@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onButtonClick(view: View) {
         val button = view as Button
-        model.onButtonClick(button.text)
+        model.onButtonClick(button.text.single())
     }
 
 }

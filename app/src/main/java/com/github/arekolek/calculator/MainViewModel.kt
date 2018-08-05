@@ -1,48 +1,44 @@
 package com.github.arekolek.calculator
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.toLiveData
 import com.github.arekolek.calculator.math.Evaluator
 import com.github.arekolek.calculator.math.ExpressionEvaluationException
+import io.reactivex.Scheduler
+import io.reactivex.processors.PublishProcessor
+import io.reactivex.schedulers.Schedulers
 import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.math.min
 
-class MainViewModel(private val evaluator: Evaluator) : ViewModel() {
+class MainViewModel(
+    private val evaluator: Evaluator,
+    scheduler: Scheduler = Schedulers.single()
+) : ViewModel() {
 
-    private val _state = MutableLiveData<UiState>()
-    val state: LiveData<UiState> get() = _state
+    private val processor = PublishProcessor.create<Char>()
 
-    fun onButtonClick(text: CharSequence) {
-        val expression = nextExpression(text)
-        val result = evaluate(expression)
-        _state.value = UiState(expression, result)
-    }
+    val state: LiveData<UiState> = processor
+        .observeOn(scheduler)
+        .scan(UiState(), this::computeNextState)
+        .toLiveData()
 
-    private fun nextExpression(text: CharSequence): String {
-        return _state
-            .value
-            ?.expression
-            .orEmpty()
-            .run {
-                when (text) {
-                    "⌫" -> dropLast(1)
-                    else -> plus(text)
-                }
-            }
-    }
-
-    private fun evaluate(expression: String): String {
-        return try {
-            if (expression.isEmpty()) {
-                ""
-            } else {
-                evaluator.evaluate(expression.normalize()).format()
-            }
-        } catch (e: ExpressionEvaluationException) {
-            _state.value?.result.orEmpty()
+    private fun computeNextState(state: UiState, key: Char): UiState {
+        val expression = when (key) {
+            '⌫' -> state.expression.dropLast(1)
+            else -> state.expression + key
         }
+        val result = try {
+            evaluator.evaluate(expression.normalize()).format()
+        } catch (e: ExpressionEvaluationException) {
+            state.result.takeUnless { expression.isEmpty() }.orEmpty()
+        }
+        return UiState(expression, result)
+    }
+
+    fun onButtonClick(key: Char) {
+        processor.onNext(key)
     }
 
     private fun BigDecimal.format(length: Int = 15): String {
