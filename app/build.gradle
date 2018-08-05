@@ -27,6 +27,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'androidx.core:core-ktx:1.0.0-beta01'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-livedata:2.0.0-beta01"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.0.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.0.0-beta01"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.0"
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     testImplementation "junit:junit:4.12"
     testImplementation 'org.mockito:mockito-inline:2.20.1'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
