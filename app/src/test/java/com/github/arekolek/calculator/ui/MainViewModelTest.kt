@@ -1,4 +1,4 @@
-package com.github.arekolek.calculator
+package com.github.arekolek.calculator.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer

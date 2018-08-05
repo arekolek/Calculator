@@ -1,6 +1,5 @@
 package com.github.arekolek.calculator.math
 
-import com.github.arekolek.calculator.shouldEqualInt
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
 import org.assertj.core.api.AbstractBigDecimalAssert

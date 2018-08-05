@@ -1,6 +1,5 @@
 package com.github.arekolek.calculator.math
 
-import com.github.arekolek.calculator.shouldEqualInt
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.within
 import org.junit.Test

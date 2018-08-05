@@ -1,6 +1,5 @@
 package com.github.arekolek.calculator.math
 
-import com.github.arekolek.calculator.shouldEqualInt
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import org.amshove.kluent.shouldEqual

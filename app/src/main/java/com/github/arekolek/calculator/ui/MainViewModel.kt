@@ -1,4 +1,4 @@
-package com.github.arekolek.calculator
+package com.github.arekolek.calculator.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

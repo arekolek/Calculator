@@ -1,4 +1,4 @@
-package com.github.arekolek.calculator
+package com.github.arekolek.calculator.ui
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
+import com.github.arekolek.calculator.R
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
