@@ -9,3 +9,7 @@ Supported operations:
 - `*` multiplication
 - `(` left parenthesis
 - `)` right parenthesis
+
+[![screenshot][1]][1]
+
+  [1]: screenshot.gif
