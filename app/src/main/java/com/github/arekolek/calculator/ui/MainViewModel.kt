@@ -49,14 +49,9 @@ class MainViewModel(
     }
 
     private fun String.normalize(): String {
-        return map {
-            when (it) {
-                '−' -> '-'
-                '×' -> '*'
-                '÷' -> '/'
-                else -> it
-            }
-        }.joinToString("")
+        return replace('−', '-')
+            .replace('×', '*')
+            .replace('÷', '/')
     }
 
 }
