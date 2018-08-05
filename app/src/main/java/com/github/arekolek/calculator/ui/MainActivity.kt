@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     fun onButtonClick(view: View) {
         val button = view as Button
-        model.onButtonClick(button.text.single())
+        val key = if (button.id == R.id.backspace) Backspace else Character(button.text.single())
+        model.onButtonClick(key)
     }
 
 }

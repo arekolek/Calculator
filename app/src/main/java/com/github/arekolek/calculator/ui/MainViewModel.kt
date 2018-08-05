@@ -17,17 +17,17 @@ class MainViewModel(
     scheduler: Scheduler = Schedulers.single()
 ) : ViewModel() {
 
-    private val processor = PublishProcessor.create<Char>()
+    private val processor = PublishProcessor.create<KeyPress>()
 
     val state: LiveData<UiState> = processor
         .observeOn(scheduler)
         .scan(UiState(), this::computeNextState)
         .toLiveData()
 
-    private fun computeNextState(state: UiState, key: Char): UiState {
+    private fun computeNextState(state: UiState, key: KeyPress): UiState {
         val expression = when (key) {
-            '⌫' -> state.expression.dropLast(1)
-            else -> state.expression + key
+            is Backspace -> state.expression.dropLast(1)
+            is Character -> state.expression + key.value
         }
         val result = try {
             evaluator.evaluate(expression.normalize()).format()
@@ -37,7 +37,7 @@ class MainViewModel(
         return UiState(expression, result)
     }
 
-    fun onButtonClick(key: Char) {
+    fun onButtonClick(key: KeyPress) {
         processor.onNext(key)
     }
 

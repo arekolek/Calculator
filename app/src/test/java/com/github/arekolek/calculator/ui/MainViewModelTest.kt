@@ -35,9 +35,9 @@ class MainViewModelTest {
         }
 
         model.state.observeForever(observer)
-        model.onButtonClick('2')
-        model.onButtonClick('+')
-        model.onButtonClick('2')
+        model.onButtonClick(Character('2'))
+        model.onButtonClick(Character('+'))
+        model.onButtonClick(Character('2'))
 
         scheduler.triggerActions()
 
@@ -55,8 +55,8 @@ class MainViewModelTest {
         }
 
         model.state.observeForever(observer)
-        model.onButtonClick('2')
-        model.onButtonClick('⌫')
+        model.onButtonClick(Character('2'))
+        model.onButtonClick(Backspace)
 
         scheduler.triggerActions()
 
@@ -72,7 +72,7 @@ class MainViewModelTest {
             .willReturn(0.592452830188679245283018867924528301886792452830188679245.toBigDecimal())
 
         model.state.observeForever(observer)
-        model.onButtonClick('1')
+        model.onButtonClick(Character('1'))
 
         scheduler.triggerActions()
 
@@ -85,7 +85,7 @@ class MainViewModelTest {
             .willReturn(666666.6666666666666666666666666666666666666666666666666666.toBigDecimal())
 
         model.state.observeForever(observer)
-        model.onButtonClick('1')
+        model.onButtonClick(Character('1'))
 
         scheduler.triggerActions()
 
@@ -98,7 +98,7 @@ class MainViewModelTest {
             .willReturn("100000000000000000000000".toBigDecimal())
 
         model.state.observeForever(observer)
-        model.onButtonClick('1')
+        model.onButtonClick(Character('1'))
 
         scheduler.triggerActions()
 
