@@ -1,4 +1,4 @@
-package com.github.arekolek.calculator
+package com.github.arekolek.calculator.math
 
 import java.math.BigDecimal
 import java.math.RoundingMode

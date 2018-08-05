@@ -1,4 +1,4 @@
-package com.github.arekolek.calculator
+package com.github.arekolek.calculator.math
 
 import org.amshove.kluent.AnyException
 import org.amshove.kluent.shouldEqual

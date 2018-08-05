@@ -1,4 +1,4 @@
-package com.github.arekolek.calculator
+package com.github.arekolek.calculator.math
 
 import org.amshove.kluent.shouldEqual
 import org.junit.Test
