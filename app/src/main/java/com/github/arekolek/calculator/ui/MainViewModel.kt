@@ -6,7 +6,9 @@ import androidx.lifecycle.toLiveData
 import com.github.arekolek.calculator.math.Evaluator
 import com.github.arekolek.calculator.math.ExpressionEvaluationException
 import io.reactivex.Scheduler
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.processors.PublishProcessor
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -19,9 +21,15 @@ class MainViewModel(
 
     private val processor = PublishProcessor.create<KeyPress>()
 
+    private var disposables = CompositeDisposable()
+
     val state: LiveData<UiState> = processor
         .observeOn(scheduler)
         .scan(UiState(), this::computeNextState)
+        .publish()
+        .apply {
+            connect { disposables += it }
+        }
         .toLiveData()
 
     private fun computeNextState(state: UiState, key: KeyPress): UiState {
@@ -52,6 +60,10 @@ class MainViewModel(
         return replace('−', '-')
             .replace('×', '*')
             .replace('÷', '/')
+    }
+
+    override fun onCleared() {
+        disposables.clear()
     }
 
 }
