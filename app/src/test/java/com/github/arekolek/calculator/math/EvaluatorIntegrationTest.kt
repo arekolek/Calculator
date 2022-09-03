@@ -1,6 +1,6 @@
 package com.github.arekolek.calculator.math
 
-import org.amshove.kluent.shouldEqual
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldThrow
 import org.assertj.core.api.AbstractBigDecimalAssert
 import org.assertj.core.api.Assertions.assertThat
@@ -56,19 +56,19 @@ class EvaluatorIntegrationTest {
     @Test
     fun `decimal addition`() {
         evaluator.evaluate("39.14009024234729+58.875814167211324")
-            .shouldEqual("39.14009024234729".toBigDecimal() + "58.875814167211324".toBigDecimal())
+            .shouldBeEqualTo("39.14009024234729".toBigDecimal() + "58.875814167211324".toBigDecimal())
     }
 
     @Test
     fun `decimal subtraction`() {
         evaluator.evaluate("39.14009024234729-58.875814167211324")
-            .shouldEqual("39.14009024234729".toBigDecimal() - "58.875814167211324".toBigDecimal())
+            .shouldBeEqualTo("39.14009024234729".toBigDecimal() - "58.875814167211324".toBigDecimal())
     }
 
     @Test
     fun `decimal multiplication`() {
         evaluator.evaluate("39.14009024234729*58.875814167211324")
-            .shouldEqual("39.14009024234729".toBigDecimal() * "58.875814167211324".toBigDecimal())
+            .shouldBeEqualTo("39.14009024234729".toBigDecimal() * "58.875814167211324".toBigDecimal())
     }
 
     private fun AbstractBigDecimalAssert<*>.isCloseTo(value: String) {

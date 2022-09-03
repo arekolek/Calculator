@@ -2,7 +2,7 @@ package com.github.arekolek.calculator.math
 
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
-import org.amshove.kluent.shouldEqual
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -70,6 +70,6 @@ class EvaluatorTest {
 
         val evaluator = Evaluator(tokenizer, converter, postfixEvaluator)
 
-        evaluator.evaluate("2/3") shouldEqual 2.toBigDecimal() / 3.toBigDecimal()
+        evaluator.evaluate("2/3") shouldBeEqualTo 2.toBigDecimal() / 3.toBigDecimal()
     }
 }
