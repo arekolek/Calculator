@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
 import com.github.arekolek.calculator.R
-import kotlinx.android.synthetic.main.main_activity.*
+import com.github.arekolek.calculator.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: MainActivityBinding
 
     private val model by lazy {
         ViewModelProviders.of(this, ViewModelFactory()).get<MainViewModel>()
@@ -17,10 +19,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        binding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         model.state.observe(this) {
-            expression.text = it.expression
-            result.text = it.result
+            binding.expression.text = it.expression
+            binding.result.text = it.result
         }
     }
 
