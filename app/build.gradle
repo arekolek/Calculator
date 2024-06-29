@@ -3,6 +3,28 @@ plugins {
     id 'kotlin-android'
 }
 
+def credentials = rootProject.file('keystore.properties')
+if (credentials.exists()) {
+    def properties = new Properties()
+    credentials.withInputStream { properties.load(it) }
+
+    android {
+        signingConfigs {
+            release {
+                storeFile file(properties['storeFile'])
+                storePassword properties['storePassword']
+                keyAlias properties['keyAlias']
+                keyPassword properties['keyPassword']
+            }
+        }
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}
+
 android {
     compileSdk 34
     defaultConfig {
@@ -15,7 +37,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
